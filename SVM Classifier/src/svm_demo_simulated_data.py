@@ -2,21 +2,7 @@ import split_standardize
 import numpy as np
 import matplotlib.pyplot as plt
 import svm_classifier
-
-def load_simulated_data(n=1000, a=10, b=5):
-    '''
-    Generates simulated data for testing SVM
-    '''
-    X = np.vstack((np.random.uniform(size=n), np.random.uniform(size=n))).T
-    t = X[:,1] - np.sin(a*X[:,0])
-    prob = 1/(1+np.exp(-b*t))
-    Y = np.random.binomial(n=1, p=prob, size=n)
-    
-    # Visualize
-    plt.scatter(X[:,0], X[:,1], c=['red' if y == 1 else 'blue' for y in Y])
-    
-    return split_standardize.split_standardize(X, Y)
-
+import load_simulated_data
 
 if __name__ == '__main__':
 
@@ -28,7 +14,7 @@ if __name__ == '__main__':
     folds=3
     
     # Load the data
-    X_train, y_train, X_test, y_test = load_simulated_data(n=1000)
+    X_train, y_train, X_test, y_test = load_simulated_data.load_simulated_data(n=1000)
     
     # Fit the model
     acc_rbf = svm_classifier.multiclass_svm(X_train, y_train, X_test, y_test, lambs=lambs, folds=3, kernel=kernel, params=params, 
